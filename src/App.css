@@ -1,38 +1,80 @@
 .App {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Header {
+  background-color: rgb(18, 65, 119);
+  width: 100%;
+  height: 80px;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Header .links {
+  max-height: 80px;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Header .links a {
+  text-decoration: none;
+  color: white;
+  font-size: 25px;
+  margin-left: 50px;
+}
+
+.Form {
+  text-align: center;
+  margin-top: 700px;
+  width: 500px;
+  height: 600px;
+  background-color: deepskyblue;
+  box-shadow: 3px 3px 10px;
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.Form .title {
   color: white;
+  flex: 20%;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 35px;
 }
 
-.App-link {
-  color: #61dafb;
+.Form .inputs {
+  flex: 80%;
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.inputs *{
+  width: 250px;
+  height: 40px;
+  font-size: 20px;
+  border-radius: 6px;
+  border: none;
+  padding-left: 10px;
+  margin-top: 10px;
+}
+
+.inputs #submit {
+  cursor: pointer;
+}
+
+.clientCard {
+  width: 500px;
+  height: 170px;
+  border: 2px solid black;
+  border-radius: 20px;
+  margin: 10px;
 }
