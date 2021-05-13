@@ -16,7 +16,7 @@ function Clients() {
     });
   };
 
-  const submitReview = () => {
+  const submitClient = () => {
     Axios.post("http://localhost:3001/api/insert", {
       clientName: clientName,
       clientGender: clientGender,
@@ -45,63 +45,58 @@ function Clients() {
 
   return (
     <div>
-    <div class="registration-form">
-      <form>
-        <h5 class="card-title">Add new client</h5>
-        <div class="form-group">
-          <input
-            type="text"
-            id="inputUserame"
-            class="form-control item"
-            placeholder="Name..."
-            onChange={(e) => {
-              setClientName(e.target.value);
-            }}
-            required
-            autofocus
-          />
-        </div>
+      <div class="registration-form">
+        <form>
+          <h5 class="card-title">Add new client</h5>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control item"
+              placeholder="Name..."
+              onChange={(e) => {
+                setClientName(e.target.value);
+              }}
+              required
+              autofocus
+            />
+          </div>
 
-        <div class="form-group">
-          <select
-            class="form-control item"
-            name="clientGender"
-            onChange={(e) => {
-              setClientGender(e.target.value);
-            }}
-          >
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </div>
+          <div class="form-group">
+            <select
+              class="form-control item"
+              onChange={(e) => {
+                setClientGender(e.target.value);
+              }}
+            >
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
 
-        <div class="form-group">
-          <input
-            class="form-control item"
-            type="date"
-            name="clientBirthdate"
-            placeholder="Brithdate ..."
-            onChange={(e) => {
-              setClientBirthdate(e.target.value);
-            }}
-          />
-        </div>
-        <button
-          type="button"
-          class="btn btn-block create-account"
-          onClick={submitReview}
-        >
-          Add client to database.
+          <div class="form-group">
+            <input
+              class="form-control item"
+              type="date"
+              placeholder="Brithdate ..."
+              onChange={(e) => {
+                setClientBirthdate(e.target.value);
+              }}
+            />
+          </div>
+          <button type="button" class="button-submit" onClick={submitClient}>
+            Add client to database
+          </button>
+        </form>
+      </div>
+
+      <div class="display-clients-section">
+        <button class="button-submit" onClick={displayClients}>
+          Display all clients
         </button>
-      </form>
-    </div>
-    
-    <div class="display-clients-section">
-        <button onClick={displayClients}>Display clients!</button>
         {clientList.map((val) => {
           return (
-            <div class="clientCards">
+            <div class="entity-cards">
               <h1>{val.clientName}</h1>
               <p>{val.clientGender}</p>
               <p>{val.clientBirthdate}</p>
