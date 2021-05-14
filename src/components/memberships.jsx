@@ -5,7 +5,6 @@ function Memberships () {
 
     return (
         <div>
-    
             <h3>Hello from memberships page!</h3>
         </div>
     )
