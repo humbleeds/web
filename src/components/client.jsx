@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../App";
 import Axios from "axios";
 
@@ -94,16 +94,16 @@ function Clients() {
         <button class="button-submit" onClick={displayClients}>
           Display all clients
         </button>
-        {clientList.map((val) => {
+        {clientList.map((client) => {
           return (
-            <div class="entity-cards">
-              <h1>{val.clientName}</h1>
-              <p>{val.clientGender}</p>
-              <p>{val.clientBirthdate}</p>
+            <div key={client.clientID} class="entity-cards">
+              <h1>{client.clientName}</h1>
+              <p>{client.clientGender}</p>
+              <p>{client.clientBirthdate}</p>
 
               <button
                 onClick={() => {
-                  deleteClient(val.clientName);
+                  deleteClient(client.clientName);
                 }}
               >
                 Delete client
@@ -116,7 +116,7 @@ function Clients() {
               />
               <button
                 onClick={() => {
-                  updateClientName(val.clientName);
+                  updateClientName(client.clientName);
                 }}
               >
                 Update

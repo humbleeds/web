@@ -93,16 +93,16 @@ function Trainers() {
 
       <div class="display-clients-section">
         <button class="button-submit" onClick={displayTrainers}>Display all trainers</button>
-        {trainerList.map((val) => {
+        {trainerList.map((trainer) => {
           return (
-            <div class="clientCards">
-              <h1>{val.trainerName}</h1>
-              <p>{val.trainerSkill}</p>
-              <p>{val.trainerBirthdate}</p>
+            <div key={trainer.trainerID} class="entity-cards">
+              <h1>{trainer.trainerName}</h1>
+              <p>{trainer.trainerSkill}</p>
+              <p>{trainer.trainerBirthdate}</p>
 
               <button
                 onClick={() => {
-                  deleteTrainer(val.trainerName);
+                  deleteTrainer(trainer.trainerName);
                 }}>
                 Delete trainer
               </button>
@@ -114,7 +114,7 @@ function Trainers() {
               />
               <button
                 onClick={() => {
-                  updateTrainer(val.trainerName);
+                  updateTrainer(trainer.trainerName);
                 }}
               >
                 Update

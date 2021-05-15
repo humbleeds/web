@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../App";
 import Axios from 'axios';
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 function Discounts() {
     const [discountDescription, setDiscountDescription] = useState("");
     const [discountDuration, setDiscountDuration] = useState("");
     const [discountList, setDiscountList] = useState([]);
-    const [newDiscountDescription, setNewDiscountDescription] = useState([]);
+    const [newDiscountDuration, setNewDiscountDuration] = useState("");
+    const [modalIsOpen, setModalIsOpen] = useState(false);
   
     const displayDiscounts = () => {
-      Axios.get("http://localhost:3001/api/get").then((response) => {
+      Axios.get("http://localhost:3001/api/get-discounts").then((response) => {
         console.log(response.data);
         setDiscountList(response.data);
       });
     };
   
     const submitDiscount = () => {
-      Axios.post("http://localhost:3001/api/insert", {
+      Axios.post("http://localhost:3001/api/insert-discount", {
         discountDescription: discountDescription,
         discountDuration: discountDuration,
       });
@@ -30,14 +34,15 @@ function Discounts() {
     };
   
     const deleteDiscount = (discountDescription) => {
-      Axios.delete(`http://localhost:3001/api/delete/${discountDescription}`);
+      Axios.delete(`http://localhost:3001/api/delete-discount/${discountDescription}`);
     };
   
     const updateDiscount = (discountDescription) => {
-      Axios.put("http://localhost:3001/api/update", {
+      Axios.put("http://localhost:3001/api/update-discount-duration", {
+        newDiscountDuration: newDiscountDuration,
         discountDescription: discountDescription,
       });
-      setNewDiscountDescription("");
+      setNewDiscountDuration("");
     };
   
     return (
@@ -79,33 +84,54 @@ function Discounts() {
   
         <div class="display-clients-section">
           <button class="button-submit" onClick={displayDiscounts}>Display all discounts</button>
-          {discountList.map((val) => {
+          {discountList.map((discount) => {
             return (
-              <div class="clientCards">
-                <h1>{val.discountDescription}</h1>
-                <p>{val.discountDuration}</p>
-                <p>{val.trainerBirthdate}</p>
+              <div class="entity-cards">
+                <h1>{discount.discountDescription}</h1>
+                <p>{discount.discountDuration}</p>
+                <p>{discount.trainerBirthdate}</p>
   
                 <button
                   onClick={() => {
-                    deleteDiscount(val.discountDescription);
+                    deleteDiscount(discount.discountDescription);
                   }}
                 >
                   Delete discount
                 </button>
+                <button onClick={() => setModalIsOpen(true)}>Update</button>
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                class="Modal"
+                style={{
+                  overlay: {},
+                  content: {
+                    position: "absolute",
+                    borderRadius: 30,
+                    border: 50,
+                    left: 500,
+                    width: 400,
+                    backgroundColor: "#5ba4e7",
+                  },
+                }}
+              >
+                <h1>Edit discount</h1>
                 <input
                   type="text"
+                  placeholder="Edit discount..."
                   onChange={(e) => {
-                    setNewDiscountDescription(e.target.value);
+                    setNewDiscountDuration(e.target.value);
                   }}
-                />
+                ></input>
                 <button
                   onClick={() => {
-                    updateDiscount(val.discountDescription);
+                    updateDiscount(discount.discountDescription);
                   }}
                 >
-                  Update
+                  Change discount duration
                 </button>
+                <button onClick={() => setModalIsOpen(false)}>Close</button>
+              </Modal>
               </div>
             );
           })}
