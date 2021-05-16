@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "../App";
 import Axios from "axios";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 function Clients() {
   const [clientName, setClientName] = useState("");
@@ -8,6 +11,7 @@ function Clients() {
   const [clientBirthdate, setClientBirthdate] = useState("");
   const [clientList, setClientList] = useState([]);
   const [newClientName, setNewClientName] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const displayClients = () => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
@@ -37,7 +41,8 @@ function Clients() {
   };
 
   const updateClientName = (clientName) => {
-    Axios.put("http://localhost:3001/api/update", {
+    Axios.put("http://localhost:3001/api/update-clientname", {
+      newClientName: newClientName,
       clientName: clientName,
     });
     setNewClientName("");
@@ -57,7 +62,7 @@ function Clients() {
                 setClientName(e.target.value);
               }}
               required
-              autofocus
+              autoFocus
             />
           </div>
 
@@ -108,19 +113,40 @@ function Clients() {
               >
                 Delete client
               </button>
-              <input
-                type="text"
-                onChange={(e) => {
-                  setNewClientName(e.target.value);
-                }}
-              />
-              <button
-                onClick={() => {
-                  updateClientName(client.clientName);
+             <button onClick={() => setModalIsOpen(true)}>Update</button>
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                class="Modal"
+                style={{
+                  overlay: {},
+                  content: {
+                    position: "absolute",
+                    borderRadius: 30,
+                    border: 50,
+                    left: 500,
+                    width: 400,
+                    backgroundColor: "#5ba4e7",
+                  },
                 }}
               >
-                Update
-              </button>
+                <h1>Edit client info</h1>
+                <input
+                  type="text"
+                  placeholder="Edit client name..."
+                  onChange={(e) => {
+                    setNewClientName(e.target.value);
+                  }}
+                ></input>
+                <button
+                  onClick={() => {
+                    updateClientName(client.clientName);
+                  }}
+                >
+                  Change client name
+                </button>
+                <button onClick={() => setModalIsOpen(false)}>Close</button>
+              </Modal>
             </div>
           );
         })}

@@ -59,7 +59,7 @@ function Discounts() {
                   setDiscountDescription(e.target.value);
                 }}
                 required
-                autofocus
+                autoFocus
               />
             </div>
   
@@ -86,7 +86,7 @@ function Discounts() {
           <button class="button-submit" onClick={displayDiscounts}>Display all discounts</button>
           {discountList.map((discount) => {
             return (
-              <div class="entity-cards">
+              <div class="entity-cards" key={discount.discountID}>
                 <h1>{discount.discountDescription}</h1>
                 <p>{discount.discountDuration}</p>
                 <p>{discount.trainerBirthdate}</p>

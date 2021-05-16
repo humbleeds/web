@@ -27,7 +27,7 @@ class ClientsDropdown extends Component {
   render() {
     return (
       <div class="form-group">
-        <select class="form-control item" required autofocus onChange={this.props.onChange}>
+        <select class="form-control item" required autoFocus onChange={this.props.onChange}>
           {this.state.clients.map((client) => (
             <option key={client.clientID} value={client.display}>
               {client.display}

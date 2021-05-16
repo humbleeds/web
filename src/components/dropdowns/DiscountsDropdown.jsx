@@ -27,7 +27,7 @@ class DiscountsDropdown extends Component {
   render() {
     return (
       <div class="form-group">
-        <select class="form-control item" required autofocus>
+        <select class="form-control item" required autoFocus onChange={this.props.onChange}>
           {this.state.discounts.map((discount) => (
             <option key={discount.discountID} value={discount.display}>
               {discount.display}
