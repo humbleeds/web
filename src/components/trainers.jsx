@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "../App";
 import Axios from "axios";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 function Trainers() {
   const [trainerName, setTrainerName] = useState("");
@@ -8,6 +11,8 @@ function Trainers() {
   const [trainerBirthdate, setTrainerBirthdate] = useState("");
   const [trainerList, setTrainerList] = useState([]);
   const [newTrainerName, setNewTrainerName] = useState([]);
+  const [newTrainerSkill, setNewTrainerSkill] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const displayTrainers = () => {
     Axios.get("http://localhost:3001/api/get-trainers").then((response) => {
@@ -36,11 +41,20 @@ function Trainers() {
     Axios.delete(`http://localhost:3001/api/delete-trainer/${trainerName}`);
   };
 
-  const updateTrainer = (trainerName) => {
-    Axios.put("http://localhost:3001/api/update", {
+  const updateTrainerName = (trainerName) => {
+    Axios.put("http://localhost:3001/api/update-trainername", {
+      newTrainerName: newTrainerName,
       trainerName: trainerName,
     });
     setNewTrainerName("");
+  };
+
+  const updateTrainerSkill = (trainerName) => {
+    Axios.put("http://localhost:3001/api/update-trainerskill", {
+      newTrainerSkill: newTrainerSkill,
+      trainerName: trainerName,
+    });
+    setNewTrainerSkill("");
   };
 
   return (
@@ -57,7 +71,7 @@ function Trainers() {
                 setTrainerName(e.target.value);
               }}
               required
-              autofocus
+              autoFocus
             />
           </div>
 
@@ -106,19 +120,55 @@ function Trainers() {
                 }}>
                 Delete trainer
               </button>
-              <input
-                type="text"
-                onChange={(e) => {
-                  setNewTrainerName(e.target.value);
-                }}
-              />
-              <button
-                onClick={() => {
-                  updateTrainer(trainer.trainerName);
+              
+              <button onClick={() => setModalIsOpen(true)}>Update</button>
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                class="Modal"
+                style={{
+                  overlay: {},
+                  content: {
+                    position: "absolute",
+                    borderRadius: 30,
+                    border: 50,
+                    left: 500,
+                    width: 400,
+                    backgroundColor: "#5ba4e7",
+                  },
                 }}
               >
-                Update
-              </button>
+                <h1>Edit trainer info</h1>
+                <input
+                  type="text"
+                  placeholder="Edit trainer name..."
+                  onChange={(e) => {
+                    setNewTrainerName(e.target.value);
+                  }}
+                ></input>
+                <button
+                  onClick={() => {
+                    updateTrainerName(trainer.trainerName);
+                  }}
+                >
+                  Change trainer name
+                </button>
+                <input
+                  type="text"
+                  placeholder="Edit trainer skill..."
+                  onChange={(e) => {
+                    setNewTrainerSkill(e.target.value);
+                  }}
+                ></input>
+                <button
+                  onClick={() => {
+                    updateTrainerSkill(trainer.trainerSkill);
+                  }}
+                >
+                  Change trainer skill
+                </button>
+                <button onClick={() => setModalIsOpen(false)}>Close</button>
+              </Modal>
             </div>
           );
         })}
