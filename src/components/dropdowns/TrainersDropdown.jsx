@@ -27,7 +27,7 @@ class TrainersDropdown extends Component {
   render() {
     return (
       <div class="form-group">
-        <select class="form-control item" required autofocus>
+        <select class="form-control item" required autofocus onChange={this.props.onChange}>
           {this.state.trainers.map((trainer) => (
             <option key={trainer.trainerID} value={trainer.display}>
               {trainer.display}

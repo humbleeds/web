@@ -68,12 +68,26 @@ function Memberships() {
       <div class="registration-form">
         <form>
           <h5 class="card-title">Add new membership</h5>
-          <ClientsDropdown onChange={(e) => {
-                setMembershipClient(e.target.value);
-              }}></ClientsDropdown>
-          <WorkoutsDropdown></WorkoutsDropdown>
-          <TrainersDropdown></TrainersDropdown>
-          <DiscountsDropdown></DiscountsDropdown>
+          <ClientsDropdown
+            onChange={(e) => {
+              setMembershipClient(e.target.value);
+            }}
+          ></ClientsDropdown>
+          <WorkoutsDropdown
+            onChange={(e) => {
+              setMembershipWorkout(e.target.value);
+            }}
+          ></WorkoutsDropdown>
+          <TrainersDropdown
+            onChange={(e) => {
+              setMembershipTrainer(e.target.value);
+            }}
+          ></TrainersDropdown>
+          <DiscountsDropdown
+            onChange={(e) => {
+              setMembershipDiscount(e.target.value);
+            }}
+          ></DiscountsDropdown>
           <div class="form-group">
             <input
               class="form-control item"
@@ -113,9 +127,12 @@ function Memberships() {
         {membershipList.map((val) => {
           return (
             <div key={val.membershipID} class="entity-cards">
-              <h1>{val.membershipClient}</h1>
-              <p>{val.membershipDiscount}</p>
-              <p>{val.trainerBirthdate}</p>
+              <h1>Client: {val.membershipClient}</h1>
+              <p>Trainer: {val.membershipTrainer}</p>
+              <p>Type: {val.membershipWorkout}</p>
+              <p>Duration: {val.membershipDuration}</p>
+              <p>Price: {val.membershipPrice}</p>
+              <p>Discount: {val.membershipDiscount}</p>
 
               <button
                 onClick={() => {

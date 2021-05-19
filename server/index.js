@@ -48,6 +48,21 @@ app.delete("/api/delete/:clientName", (req, res) => {
     };
 });
 
+app.put("/api/update-clientname", (req, res) => {
+  const newClientName = req.body.newClientName;
+  const clientName = req.body.clientName;
+  const sql = "UPDATE clients SET clientName = ? WHERE clientName = ?"
+
+  con.query(
+    sql,
+    [newClientName, clientName],
+    function (err, result) {
+      if (err) throw err;
+      console.log(result);
+    }
+  );
+});
+
 app.get("/api/get-trainers", (req, res) => {
   var sql = "SELECT * FROM trainers";
   con.query(sql, function (err, result) {
@@ -77,6 +92,36 @@ app.post("/api/insert-trainer", (req, res) => {
     function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
+    }
+  );
+});
+
+app.put("/api/update-trainername", (req, res) => {
+  const newTrainerName = req.body.newTrainerName;
+  const trainerName = req.body.trainerName;
+  const sql = "UPDATE trainers SET trainerName = ? WHERE trainerName = ?"
+
+  con.query(
+    sql,
+    [newTrainerName, trainerName],
+    function (err, result) {
+      if (err) throw err;
+      console.log(result);
+    }
+  );
+});
+
+app.put("/api/update-trainerskill", (req, res) => {
+  const newTrainerSkill = req.body.newTrainerSkill;
+  const trainerName = req.body.trainerName;
+  const sql = "UPDATE trainers SET trainerSkill = ? WHERE trainerName = ?"
+
+  con.query(
+    sql,
+    [newTrainerSkill, trainerName],
+    function (err, result) {
+      if (err) throw err;
+      console.log(result);
     }
   );
 });
@@ -200,7 +245,7 @@ app.get("/api/get-memberships", (req, res) => {
 
 app.delete("/api/delete-membership/:membershipClient", (req, res) => {
   const name = req.params.membershipClient;
-  const sql = "DELETE FROM memberships WHERE membershipsClient = ?"
+  const sql = "DELETE FROM memberships WHERE membershipClient = ?"
 
   con.query(sql, name), (err, result) => {
       if (err) console.log(err);

@@ -68,7 +68,7 @@ function Workouts() {
                 setWorkoutType(e.target.value);
               }}
               required
-              autofocus
+              autoFocus
             />
           </div>
 
